@@ -4,7 +4,7 @@ import { TanStackDevtools } from "@tanstack/react-devtools";
 
 export const Route = createRootRoute({
   component: () => (
-    <main className="container mx-auto px-4 py-6 sm:px-6">
+    <main className="container mx-auto grid min-h-svh px-4 py-6 sm:px-6">
       <Outlet />
       <TanStackDevtools
         config={{

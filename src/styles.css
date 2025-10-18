@@ -10,6 +10,30 @@
   --color-foreground: oklch(0.9619 0 0);
   --color-muted: oklch(0.7244 0 0);
   --color-primary: oklch(0.6441 0.2368 0);
+  --color-border: hsl(206.41 100% 35%);
+
+  --animate-slideDownAndFade: slideDownAndFade 150ms ease-out;
+
+  @keyframes slideDownAndFade {
+    from {
+      opacity: 0;
+      transform: translateY(-2px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+@layer utilities {
+  .scrollbar::-webkit-scrollbar {
+    @apply h-1.5 w-1.5 rounded bg-transparent;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb {
+    @apply bg-muted rounded-sm outline-none;
+  }
 }
 
 @property --angle {
@@ -36,7 +60,7 @@ body {
     conic-gradient(
         from var(--angle),
         var(--color-primary),
-        hsl(206.41 100% 35%),
+        var(--color-border),
         var(--color-primary)
       )
       border-box;
@@ -46,4 +70,8 @@ body {
 
 .animated-border-gradient:focus-within {
   animation-play-state: running;
+}
+
+.gradient-bg {
+  background-image: radial-gradient(at top right, var(--color-bg-light), var(--color-primary));
 }
