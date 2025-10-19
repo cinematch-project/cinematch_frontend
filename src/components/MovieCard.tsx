@@ -4,13 +4,15 @@ import { cn } from "@/lib/utils";
 
 type MovieCardProps = React.ComponentProps<"article"> & {
   movie: Movie;
+  hover?: boolean;
 };
 
-export function MovieCard({ movie, className, children, ...rest }: MovieCardProps) {
+export function MovieCard({ movie, className, children, hover, ...rest }: MovieCardProps) {
   return (
     <article
       className={cn(
-        "hover:from-primary/10 hover:to-bg-light rounded-xl p-4 transition duration-300 hover:bg-linear-to-tl hover:from-15%",
+        "rounded-xl p-4 transition duration-300",
+        hover && "hover:from-primary/10 hover:to-bg-light hover:bg-linear-to-tl hover:from-15%",
         className,
       )}
       {...rest}
@@ -19,6 +21,7 @@ export function MovieCard({ movie, className, children, ...rest }: MovieCardProp
         <img
           src={`https://image.tmdb.org/t/p/w92${movie.poster_path}`}
           alt={movie.title}
+          width={92}
           className="self-start rounded"
         />
         <div>
