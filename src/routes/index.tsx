@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { Link, createFileRoute } from "@tanstack/react-router";
 import { Sparkles, Trash2 } from "lucide-react";
 import { Button, MovieList, Searchbar } from "@/components";
 import { useFavoriteMovies } from "@/lib/hooks";
@@ -34,8 +34,10 @@ function App() {
                 <Trash2 />
                 Clear all
               </Button>
-              <Button>
-                <Sparkles /> Get recommendations
+              <Button asChild>
+                <Link to="/results" search={{ ids: favoriteMovies }}>
+                  <Sparkles /> Get recommendations
+                </Link>
               </Button>
             </div>
           </div>
