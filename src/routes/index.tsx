@@ -8,7 +8,11 @@ export const Route = createFileRoute("/")({
 });
 
 function App() {
-  const { favoriteMovies, toggleMovie } = useFavoriteMovies();
+  const { favoriteMovies, toggleMovie, setFavoriteMovies } = useFavoriteMovies();
+
+  const onClearAllClick = () => {
+    setFavoriteMovies([]);
+  };
 
   return (
     <div className="flex flex-col gap-y-12 pt-16">
@@ -30,7 +34,7 @@ function App() {
           <div className="flex items-center justify-between gap-4">
             <h3 className="text-lg font-bold">Your favorites</h3>
             <div className="flex gap-2">
-              <Button variant={"secondary"}>
+              <Button variant={"secondary"} onClick={onClearAllClick}>
                 <Trash2 />
                 Clear all
               </Button>

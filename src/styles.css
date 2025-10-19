@@ -27,6 +27,24 @@
 }
 
 @layer base {
+  body {
+    --color1: oklch(0.1409 0.032 240.86);
+    --color2: oklch(0.1853 0.0173 194.79);
+    --color3: oklch(0.1735 0.0214 250);
+    --color4: oklch(0.1971 0.0395 0);
+    color: var(--color-foreground);
+    background: linear-gradient(
+      -45deg,
+      var(--color1),
+      var(--color-bg-dark),
+      var(--color2),
+      var(--color3),
+      var(--color4)
+    );
+    background-size: 400% 400%;
+    animation: gradientShift 30s ease infinite;
+  }
+
   button:not(:disabled),
   [role="button"]:not(:disabled) {
     cursor: pointer;
@@ -40,6 +58,29 @@
 
   .scrollbar::-webkit-scrollbar-thumb {
     @apply bg-muted rounded-sm outline-none;
+  }
+
+  .animated-border-gradient {
+    border: 3px solid transparent;
+    background:
+      linear-gradient(var(--color-bg-dark)) padding-box,
+      conic-gradient(
+          from var(--angle),
+          var(--color-primary),
+          var(--color-border),
+          var(--color-primary)
+        )
+        border-box;
+    animation: rotate 5s linear infinite;
+    animation-play-state: paused;
+  }
+
+  .animated-border-gradient:focus-within {
+    animation-play-state: running;
+  }
+
+  .gradient-bg {
+    background-image: radial-gradient(at top right, var(--color-bg-light), var(--color-primary));
   }
 }
 
@@ -55,30 +96,14 @@
   }
 }
 
-body {
-  background-color: var(--color-bg-dark);
-  color: var(--color-foreground);
-}
-
-.animated-border-gradient {
-  border: 3px solid transparent;
-  background:
-    linear-gradient(var(--color-bg-dark)) padding-box,
-    conic-gradient(
-        from var(--angle),
-        var(--color-primary),
-        var(--color-border),
-        var(--color-primary)
-      )
-      border-box;
-  animation: rotate 5s linear infinite;
-  animation-play-state: paused;
-}
-
-.animated-border-gradient:focus-within {
-  animation-play-state: running;
-}
-
-.gradient-bg {
-  background-image: radial-gradient(at top right, var(--color-bg-light), var(--color-primary));
+@keyframes gradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
 }

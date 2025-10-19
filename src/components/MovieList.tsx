@@ -33,7 +33,7 @@ export function MovieList({ ids }: MovieListProps) {
           movie={movie}
           favoriteMovies={favoriteMovies}
           onClick={() => toggleMovie(movie.id)}
-          className="border-bg-light shadow-bg-light/80 border shadow-sm"
+          className="border-border/45 bg-bg-light/45 shadow-bg-light border shadow-sm"
         />
       ))}
     </div>
