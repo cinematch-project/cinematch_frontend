@@ -1,4 +1,4 @@
-import type { Movie } from "@/service/api/movies/types";
+import type { Movie, RecommendMoviesRequest } from "@/service/api/movies/types";
 import { api } from "@/service/api";
 
 function searchMovies(search: string) {
@@ -12,7 +12,15 @@ function getMoviesById(ids: Array<number>) {
   return api<Array<Movie>>(`movies/batch`, { params });
 }
 
+function recommend(body: RecommendMoviesRequest) {
+  return api<Array<Movie>, RecommendMoviesRequest>(`movies/recommend`, {
+    method: "POST",
+    body,
+  });
+}
+
 export const moviesApi = {
   searchMovies,
   getMoviesById,
+  recommend,
 };

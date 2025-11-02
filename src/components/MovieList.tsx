@@ -1,21 +1,15 @@
-import { useQuery } from "@tanstack/react-query";
 import { Loader2 } from "lucide-react";
-import { moviesApi } from "@/service/api";
+import type { Movie } from "@/service/api/movies";
 import { MovieWithFavoriteButton } from "@/components/MovieWithFavoriteButton";
 import { useFavoriteMovies } from "@/lib/hooks/useFavoriteMovies";
 
 type MovieListProps = {
-  ids: Array<number>;
+  data: Array<Movie> | undefined;
+  isLoading: boolean;
 };
 
-export function MovieList({ ids }: MovieListProps) {
+export function MovieList({ data, isLoading }: MovieListProps) {
   const { favoriteMovies, toggleMovie } = useFavoriteMovies();
-
-  const { data, isLoading } = useQuery({
-    queryFn: () => moviesApi.getMoviesById(ids),
-    queryKey: ["movies", { ids }],
-    enabled: ids.length > 0,
-  });
 
   if (isLoading) {
     return (

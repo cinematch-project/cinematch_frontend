@@ -18,18 +18,30 @@ export function MovieCard({ movie, className, children, hover, ...rest }: MovieC
       {...rest}
     >
       <div className="flex gap-4">
-        <img
-          src={`https://image.tmdb.org/t/p/w92${movie.poster_path}`}
-          alt={movie.title}
-          width={92}
-          className="self-start rounded"
-        />
+        <div className="w-[92px] shrink-0 self-start rounded">
+          <object data={`https://image.tmdb.org/t/p/w92${movie.poster_path}`} type="image/png">
+            <img
+              src={`https://placehold.co/92x138/0064b3/f2f2f2/?text=${movie.title}`}
+              alt={movie.title}
+              width={92}
+            />
+          </object>
+        </div>
         <div>
           <div className="flex items-center gap-1 text-sm text-yellow-300/85">
             <Star className="size-4 fill-yellow-300/90 stroke-0" />
             <span>{movie.vote_average.toFixed(2)}</span>
           </div>
-          <h3 className="py-2 font-bold">{movie.title}</h3>
+          <h3 className="py-2 font-bold">
+            <a
+              href={`https://www.themoviedb.org/movie/${movie.tmdb_id}`}
+              target="__blank"
+              className="hover:underline"
+            >
+              {movie.title}{" "}
+              <span className="text-muted">({new Date(movie.release_date).getFullYear()})</span>
+            </a>
+          </h3>
           <p className="text-muted line-clamp-3">{movie.overview}</p>
         </div>
       </div>

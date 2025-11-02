@@ -12,6 +12,7 @@ type SearchbarProps = {
 };
 
 export function Searchbar({ onMovieClick, favoriteMovies }: SearchbarProps) {
+  const [open, setOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const debouncedSearchValue = useDebounce(searchValue, 500);
 
@@ -22,9 +23,15 @@ export function Searchbar({ onMovieClick, favoriteMovies }: SearchbarProps) {
   });
 
   return (
-    <Popover.Root>
+    <Popover.Root open={open} onOpenChange={setOpen}>
       <Popover.Trigger asChild>
-        <button className="w-full">
+        <button
+          type="button"
+          className="w-full"
+          onClick={(e) => {
+            if (open) e.preventDefault();
+          }}
+        >
           <Input
             value={searchValue}
             onChange={(e) => setSearchValue(e.target.value)}

@@ -1,7 +1,9 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import { Sparkles, Trash2 } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
 import { Button, MovieList, Searchbar } from "@/components";
 import { useFavoriteMovies } from "@/lib/hooks";
+import { moviesApi } from "@/service/api";
 
 export const Route = createFileRoute("/")({
   component: App,
@@ -9,6 +11,12 @@ export const Route = createFileRoute("/")({
 
 function App() {
   const { favoriteMovies, toggleMovie, setFavoriteMovies } = useFavoriteMovies();
+
+  const { data, isLoading } = useQuery({
+    queryFn: () => moviesApi.getMoviesById(favoriteMovies),
+    queryKey: ["movies", { favoriteMovies }],
+    enabled: favoriteMovies.length > 0,
+  });
 
   const onClearAllClick = () => {
     setFavoriteMovies([]);
@@ -46,7 +54,7 @@ function App() {
             </div>
           </div>
         )}
-        <MovieList ids={favoriteMovies} />
+        <MovieList data={data} isLoading={isLoading} />
       </section>
     </div>
   );

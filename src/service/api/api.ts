@@ -1,4 +1,4 @@
-type ApiOptions<TData> = RequestInit & {
+type ApiOptions<TData> = Omit<RequestInit, "body"> & {
   body?: TData;
   params?: URLSearchParams;
 };
