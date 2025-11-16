@@ -53,7 +53,7 @@ export function Input({
         htmlFor={id}
         className={cn(
           "bg-bg-dark absolute left-14 z-1 font-bold transition-all duration-300",
-          isLabelActive && "-translate-x-8 -translate-y-8 px-0.5 text-sm",
+          isLabelActive && "-translate-x-8 -translate-y-7 px-0.5 text-sm sm:-translate-y-8",
         )}
       >
         {label}
@@ -64,7 +64,7 @@ export function Input({
         onFocus={onFocus}
         onBlur={onBlur}
         data-slot="input"
-        className={cn("h-14 w-full min-w-0 py-2 font-medium outline-none", className)}
+        className={cn("h-12 w-full min-w-0 py-2 font-medium outline-none sm:h-14", className)}
         {...props}
       />
     </div>

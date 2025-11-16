@@ -23,7 +23,7 @@ export function MovieWithFavoriteButton({
       <Button
         size={"icon-sm"}
         variant={isFavorite ? "default" : "ghost"}
-        className="absolute top-6 right-4"
+        className="absolute top-2 right-2 sm:top-6 sm:right-4"
         onClick={onClick}
       >
         {isFavorite ? <Heart className="fill-foreground stroke-0" /> : <HeartPlus />}
