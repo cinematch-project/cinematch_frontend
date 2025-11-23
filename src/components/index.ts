@@ -14,3 +14,5 @@ export * from "./Command";
 export * from "./Popover";
 export * from "./MultiSelect";
 export * from "./MovieCardBig";
+export { MultiSelectPopup } from "./MultiselectPopup";
+export { Pagination } from "./Pagination";

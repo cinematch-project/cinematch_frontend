@@ -767,15 +767,15 @@ export const MultiSelect = React.forwardRef<MultiSelectRef, MultiSelectProps>(
               variant={"outline"}
               className={cn(
                 "justify-between hover:bg-transparent",
-                autoSize ? "w-auto" : "w-full",
+                autoSize ? "w-full sm:w-auto" : "w-full",
                 responsiveSettings.compactMode && "min-h-8 text-sm",
-                screenSize === "mobile" && "min-h-12 text-base",
                 disabled && "cursor-not-allowed opacity-50",
                 className,
               )}
               style={{
                 ...widthConstraints,
                 maxWidth: `min(${widthConstraints.maxWidth}, 100%)`,
+                width: screenSize === "mobile" ? "100%" : widthConstraints.width,
               }}
             >
               {selectedValues.length > 0 ? (

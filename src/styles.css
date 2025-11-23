@@ -11,6 +11,7 @@
   --color-muted: oklch(0.7244 0 0);
   --color-primary: oklch(0.6441 0.2368 0);
   --color-border: hsl(206.41 100% 35%);
+  --color-destructive: oklch(0.5501 0.225755 29.2339);
 
   --animate-slideDownAndFade: slideDownAndFade 150ms ease-out;
 

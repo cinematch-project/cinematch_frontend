@@ -19,6 +19,7 @@ function searchMovies(request: GetMoviesRequest) {
   if (request.runtime_from !== undefined)
     params.append("runtime_from", request.runtime_from.toString());
   if (request.runtime_to !== undefined) params.append("runtime_to", request.runtime_to.toString());
+  if (request.page !== undefined) params.append("page", request.page.toString());
   if (request.genres) request.genres.forEach((id) => params.append("genres", id.toString()));
   if (request.countries)
     request.countries.forEach((id) => params.append("countries", id.toString()));

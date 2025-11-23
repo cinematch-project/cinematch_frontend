@@ -1,11 +1,20 @@
-import { Star } from "lucide-react";
+import { Heart, HeartPlus, Star } from "lucide-react";
 import type { Movie } from "@/service/api/movies";
 import { cn } from "@/lib/utils";
-import { Badge } from "@/components";
+import { Badge, Button } from "@/components";
+import { useFavoriteMovies } from "@/lib/hooks";
 
-export function MovieCardBig({ movie }: { movie: Movie }) {
+type MovieCardBigProps = React.ComponentProps<"article"> & {
+  movie: Movie;
+};
+
+export function MovieCardBig({ movie, className, ...rest }: MovieCardBigProps) {
+  const { favoriteMovies, toggleMovie } = useFavoriteMovies();
+
+  const isFavorite = favoriteMovies.includes(movie.id);
+
   return (
-    <article className={cn("transition duration-300")}>
+    <article className={cn("relative transition duration-300", className)} {...rest}>
       <div className="flex gap-4">
         <div className="w-[92px] shrink-0 self-start rounded">
           <object data={`https://image.tmdb.org/t/p/w92${movie.poster_path}`} type="image/png">
@@ -44,9 +53,34 @@ export function MovieCardBig({ movie }: { movie: Movie }) {
               ))}
             </div>
           )}
-          <p className="text-muted line-clamp-3">{movie.overview}</p>
+          <p className="text-muted mb-2 line-clamp-3">{movie.overview}</p>
+          <div className="flex w-full gap-1 pt-1 text-xs">
+            <p className="text-muted flex-1">Runtime:</p>
+            <p className="flex-6">{movie.runtime} minutes</p>
+          </div>
+          {movie.production_countries.length > 0 && (
+            <div className="flex w-full gap-1 pt-1 text-xs">
+              <p className="text-muted flex-1">Countries:</p>
+              <p className="flex-6">{movie.production_countries.map((c) => c.name).join(" | ")}</p>
+            </div>
+          )}
+          {movie.keywords.length > 0 && (
+            <div className="flex w-full gap-1 pt-1 text-xs">
+              <span className="text-muted flex-1">Keywords:</span>
+              <p className="flex-6">{movie.keywords.map((c) => c.name).join(" | ")}</p>
+            </div>
+          )}
         </div>
       </div>
+      <Button
+        size={"icon-sm"}
+        variant={isFavorite ? "default" : "ghost"}
+        className="absolute top-2 right-2 sm:top-4 sm:right-4"
+        onClick={() => toggleMovie(movie.id)}
+      >
+        {isFavorite ? <Heart className="fill-foreground stroke-0" /> : <HeartPlus />}
+        <span className="sr-only">{isFavorite ? "Remove from favorites" : "Add to favorites"}</span>
+      </Button>
     </article>
   );
 }
