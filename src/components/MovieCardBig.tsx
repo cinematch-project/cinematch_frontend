@@ -54,18 +54,18 @@ export function MovieCardBig({ movie, className, ...rest }: MovieCardBigProps) {
             </div>
           )}
           <p className="text-muted mb-2 line-clamp-3">{movie.overview}</p>
-          <div className="flex w-full gap-1 pt-1 text-xs">
+          <div className="flex w-full flex-col gap-x-1 pt-1 text-xs sm:flex-row">
             <p className="text-muted flex-1">Runtime:</p>
             <p className="flex-6">{movie.runtime} minutes</p>
           </div>
           {movie.production_countries.length > 0 && (
-            <div className="flex w-full gap-1 pt-1 text-xs">
+            <div className="flex w-full flex-col gap-x-1 pt-2 text-xs sm:flex-row sm:pt-1">
               <p className="text-muted flex-1">Countries:</p>
               <p className="flex-6">{movie.production_countries.map((c) => c.name).join(" | ")}</p>
             </div>
           )}
           {movie.keywords.length > 0 && (
-            <div className="flex w-full gap-1 pt-1 text-xs">
+            <div className="flex w-full flex-col gap-x-1 pt-2 text-xs sm:flex-row sm:pt-1">
               <span className="text-muted flex-1">Keywords:</span>
               <p className="flex-6">{movie.keywords.map((c) => c.name).join(" | ")}</p>
             </div>
