@@ -17,7 +17,7 @@ export function Searchbar({ onMovieClick, favoriteMovies }: SearchbarProps) {
   const debouncedSearchValue = useDebounce(searchValue, 500);
 
   const { data: searchResults, isFetching } = useQuery({
-    queryFn: () => moviesApi.searchMovies(debouncedSearchValue),
+    queryFn: () => moviesApi.searchMovies({ search: debouncedSearchValue }),
     queryKey: ["movies", { searchValue: debouncedSearchValue }],
     enabled: debouncedSearchValue.trim().length > 2,
   });
@@ -54,10 +54,10 @@ export function Searchbar({ onMovieClick, favoriteMovies }: SearchbarProps) {
             </Message>
           ) : searchValue.trim().length < 3 ? (
             <Message>Type to search...</Message>
-          ) : searchResults?.length === 0 ? (
+          ) : searchResults?.items.length === 0 ? (
             <Message>No results found</Message>
           ) : (
-            searchResults?.map((movie) => (
+            searchResults?.items.map((movie) => (
               <MovieWithFavoriteButton
                 key={movie.id}
                 movie={movie}
