@@ -170,11 +170,17 @@ function RouteComponent() {
           <div className="grid place-items-center py-8">
             <Loader2 className="animate-spin" />
           </div>
+        ) : movies.items.length === 0 ? (
+          <div className="grid place-items-center py-8">
+            <p className="text-muted">No results found</p>
+          </div>
         ) : (
           movies.items.map((m) => <MovieCardBig key={m.id} movie={m} className="pb-6" />)
         )}
       </section>
-      <Pagination page={page} onPageChange={onPageChange} totalPages={movies?.totalPages ?? 0} />
+      {movies?.items.length !== 0 && (
+        <Pagination page={page} onPageChange={onPageChange} totalPages={movies?.totalPages ?? 0} />
+      )}
     </div>
   );
 }
