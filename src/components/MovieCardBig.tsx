@@ -1,4 +1,4 @@
-import { Heart, HeartPlus, Star } from "lucide-react";
+import { Heart, HeartPlus, Info, Star } from "lucide-react";
 import type { Movie } from "@/service/api/movies";
 import { cn } from "@/lib/utils";
 import { Badge, Button } from "@/components";
@@ -6,9 +6,10 @@ import { useFavoriteMovies } from "@/lib/hooks";
 
 type MovieCardBigProps = React.ComponentProps<"article"> & {
   movie: Movie;
+  onExplainPress?: () => void;
 };
 
-export function MovieCardBig({ movie, className, ...rest }: MovieCardBigProps) {
+export function MovieCardBig({ movie, className, onExplainPress, ...rest }: MovieCardBigProps) {
   const { favoriteMovies, toggleMovie } = useFavoriteMovies();
 
   const isFavorite = favoriteMovies.includes(movie.id);
@@ -72,15 +73,24 @@ export function MovieCardBig({ movie, className, ...rest }: MovieCardBigProps) {
           )}
         </div>
       </div>
-      <Button
-        size={"icon-sm"}
-        variant={isFavorite ? "default" : "ghost"}
-        className="absolute top-2 right-2 sm:top-4 sm:right-4"
-        onClick={() => toggleMovie(movie.id)}
-      >
-        {isFavorite ? <Heart className="fill-foreground stroke-0" /> : <HeartPlus />}
-        <span className="sr-only">{isFavorite ? "Remove from favorites" : "Add to favorites"}</span>
-      </Button>
+      <div className="absolute top-2 right-2 space-x-1 sm:top-4 sm:right-4">
+        {!!movie.score_overview && !!onExplainPress && (
+          <Button size={"icon-sm"} variant={"ghost"} onClick={onExplainPress}>
+            <Info />
+            <span className="sr-only">{"Score overview"}</span>
+          </Button>
+        )}
+        <Button
+          size={"icon-sm"}
+          variant={isFavorite ? "default" : "ghost"}
+          onClick={() => toggleMovie(movie.id)}
+        >
+          {isFavorite ? <Heart className="fill-foreground stroke-0" /> : <HeartPlus />}
+          <span className="sr-only">
+            {isFavorite ? "Remove from favorites" : "Add to favorites"}
+          </span>
+        </Button>
+      </div>
     </article>
   );
 }

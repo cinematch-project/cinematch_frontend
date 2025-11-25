@@ -16,3 +16,4 @@ export * from "./MultiSelect";
 export * from "./MovieCardBig";
 export { MultiSelectPopup } from "./MultiselectPopup";
 export { Pagination } from "./Pagination";
+export { Progress } from "./Progress";

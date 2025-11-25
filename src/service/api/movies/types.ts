@@ -4,6 +4,11 @@ export type MovieDetail = {
   slug: string;
 };
 
+export type MovieScoreOverview = {
+  relevance_score: number;
+  column_contribution: Record<string, number>;
+};
+
 export type Movie = {
   id: number;
   tmdb_id: number;
@@ -18,6 +23,7 @@ export type Movie = {
   keywords: Array<MovieDetail>;
   production_countries: Array<MovieDetail>;
   production_companies: Array<MovieDetail>;
+  score_overview?: MovieScoreOverview;
 };
 
 export type GetMoviesRequest = {
@@ -40,8 +46,9 @@ export type GetMoviesResponse = {
 
 export type RecommendMoviesRequest = {
   ids: Array<number>;
-  top_n: number;
-  similarity_weight: number;
+  top_n?: number;
+  similarity_weight?: number;
+  min_score?: number;
 };
 
 export type FilterItem = {

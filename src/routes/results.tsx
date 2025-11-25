@@ -1,7 +1,18 @@
 import { Link, createFileRoute } from "@tanstack/react-router";
 import qs from "query-string";
 import { useQuery } from "@tanstack/react-query";
-import { Button, MovieList } from "@/components";
+import { Loader2 } from "lucide-react";
+import { useState } from "react";
+import type { Movie, MovieScoreOverview } from "@/service/api/movies";
+import {
+  Button,
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  MovieCardBig,
+  Progress,
+} from "@/components";
 import { moviesApi } from "@/service/api";
 
 type TParams = {
@@ -27,10 +38,16 @@ function RouteComponent() {
   const { ids } = Route.useSearch();
 
   const { data, isLoading } = useQuery({
-    queryFn: () => moviesApi.recommend({ ids, top_n: 20, similarity_weight: 0.65 }),
+    queryFn: () => moviesApi.recommend({ ids }),
     queryKey: ["movies", { ids }],
     enabled: ids.length > 0,
   });
+
+  const [explanation, setExplanation] = useState<MovieScoreOverview | null>(null);
+
+  const onExplainPress = (movie: Movie) => {
+    setExplanation(movie.score_overview || null);
+  };
 
   return (
     <div className="flex flex-col gap-y-12">
@@ -50,13 +67,47 @@ function RouteComponent() {
             </Button>
           </div>
         )}
-        <MovieList data={data} isLoading={isLoading} />
+        {isLoading ? (
+          <div className="grid place-items-center">
+            <Loader2 className="animate-spin" />
+          </div>
+        ) : (
+          <div className="space-y-8">
+            {data?.map((movie) => (
+              <MovieCardBig
+                key={movie.id}
+                movie={movie}
+                onExplainPress={() => onExplainPress(movie)}
+              />
+            ))}
+          </div>
+        )}
         {data?.length && (
           <Button asChild variant={"link"} className="mx-auto flex w-fit">
             <Link to="/">Back to search</Link>
           </Button>
         )}
       </section>
+      <Dialog open={!!explanation} onOpenChange={() => setExplanation(null)}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Relevance</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <p>Relevance score — {((explanation?.relevance_score ?? 0) * 100).toFixed(2)}%</p>
+            <div className="space-y-2">
+              {Object.entries(explanation?.column_contribution || {}).map(([k, v]) => (
+                <div>
+                  <p className="pb-1">
+                    {k[0].toUpperCase() + k.slice(1)} — {v}%
+                  </p>
+                  <Progress value={v} />
+                </div>
+              ))}
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
